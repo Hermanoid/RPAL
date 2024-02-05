@@ -1,0 +1,11 @@
+**/lib/
+**/CMakeFiles/
+# */CMakeFiles/*
+**/CMakeCache.txt
+**/cmake_install.cmake
+**/Makefile
+**/CMakeScripts/
+**/bin/
+*.a
+
+.vscode/
