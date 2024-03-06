@@ -3,10 +3,8 @@
 using std::cout;
 using std::endl;
 
-void print_points(const vector<Vector3d> &points, int num_points=10){
-    for (int i = 0; i < num_points; i++){
-        cout << points[i].transpose() << endl;
-    }
+void print_points(const Eigen::MatrixXd &points, int num_points=10){
+    cout << points.block(0, 0, 3, num_points) << endl;
 }
 
 int main(){
@@ -17,24 +15,23 @@ int main(){
         Isometry3d(Eigen::AngleAxisd(0.5, Vector3d(0.2, 0.3, 0.1).normalized()) 
         * Eigen::Translation3d(Vector3d(1, 0.1, 0.1)));
 
-    vector<Vector3d> target = vector<Vector3d>(num_points);
+    PointCloud target(3, num_points);
     // Generate random points
     for (int i = 0; i < num_points; i++){
-        target[i] = Vector3d::Random()*100;
+        target.col(i) = Vector3d::Random()*100;
     }
     cout << "Generated points:" << endl;
     print_points(target, 10);
 
-    vector<Vector3d> source = vector<Vector3d>(num_points);
+    PointCloud source(3, num_points);
     // Transform the points
-    for (int i = 0; i < num_points; i++){
-        source[i] = transform*target[i];
-    }
+    source = transform*target;
+
     // Print the first 10 points
     cout << "Transformed points:" << endl;
     print_points(source, 10);
 
-    Isometry3d icp_transform = icp(target, source, 100);
+    Isometry3d icp_transform = icp(target, source, 1);
 
     cout << "Estimated transform:" << endl;
     cout << icp_transform.matrix() << endl;
