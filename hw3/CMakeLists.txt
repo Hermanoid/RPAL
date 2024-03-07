@@ -7,6 +7,7 @@ find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 # include_directories(include/)
 
 add_executable(eightpoint src/eightpoint.cpp)
+add_executable(backline src/backline.cpp)
 
 # add_library(icp src/icp.cpp)
 
