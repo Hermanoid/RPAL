@@ -9,3 +9,7 @@
 *.a
 
 .vscode/
+
+*_ws/log
+*_ws/build
+*_ws/install

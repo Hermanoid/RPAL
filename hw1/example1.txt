@@ -1,0 +1,82 @@
+Master Git-Fu
+=============
+
+* @craig552uk
+* github.com/craig552uk/git-poem
+
+
+
+Git is such a mysterious tool,
+so many commands and options, I am an ignorant fool.
+
+I add. I commit. I merge, pull and push,
+everything else turns my mind to mush.
+
+I use aliases that make me feel 1337,
+but when I dance with this devil, I have two left feet.
+
+Panic! Merge conflict! Lost in a diff avalanche!
+My detached head is left swinging from a branch.
+
+
+Enough is enough! This will not do.
+I will learn the ways of the repo. I will master Git-Fu!
+
+
+I learn that a commit is a diff, with a little meta-data
+it has a unique hash, so you can check it out later.
+
+Commits have parents and children, which form a great tree
+they branch apart and merge together. This is a repository.
+
+Changes in your code are added to the stage.
+This is not yet a commit, but where a commit is made.
+
+Once your changes are staged, and you are happy with what you wrote,
+they can be committed as one. Be sure to write a useful note.
+
+
+(HEAD) is a pointer to what you can currently see,
+you can checkout any part of your code base history.
+
+(tag: is-a-label) for marking a commit,
+perhaps use them for releases, so you can quickly find it.
+
+(git-branch) creates a fork in the commit tree
+Use it to work on ideas, safe in your repository
+
+And remember that a branch (like a tag) is just a label on a commit,
+you can, if you want, very easily move it.
+
+
+Though if you do, you may have to push with --force
+but only then if the remote complains, of course.
+
+To reuse a commit buried deep elsewhere,
+(cherry-pick) can lift it out and apply it over here.
+
+(git-stash) will keep uncommitted changes out the way,
+when you're ready, you can bring them back into play.
+
+A detached head (with Git) is no cause for concern.
+It's just a commit without a branch (or so I have learned).
+
+
+Now if you want to share your work you might just push and pray
+but to fetch and rebase is much cleaner, safer, way.
+
+Fetch brings the commits from a remote repository,
+you should aim to organise your work with a neat history.
+
+Personally, I like to rebase first
+this replays my commits on top of previous work.
+
+Then to make reading the history much easier and faster,
+I merge, with --no-ff, this branch into master.
+
+
+I have much more to learn before I become a Git Master,
+But I'm confident I have the knowledge to avert repo disaster.
+
+If you struggle with Git, if you're sometime unsure what to do,
+I hope these silly rhymes help you on your journey to Git Fu.
