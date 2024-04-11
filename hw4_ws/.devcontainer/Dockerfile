@@ -75,19 +75,29 @@ RUN wget -O opencv.zip https://github.com/opencv/opencv/archive/${OPENCV_VERSION
 RUN mkdir /opencv/opencv/build
 WORKDIR /opencv/opencv/build
 
-RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
- -D CMAKE_INSTALL_PREFIX=/usr/local \
 #  -D INSTALL_PYTHON_EXAMPLES=ON \
 #  -D INSTALL_C_EXAMPLES=ON \
- -D BUILD_EXAMPLES=OFF \
- -D BUILD_opencv_apps=OFF \
- -D BUILD_DOCS=OFF \
- -D OPENCV_ENABLE_NONFREE=OFF \
- -D OPENCV_GENERATE_PKGCONFIG=ON \
- -D BUILD_PERF_TESTS=OFF \
- -D OPENCV_EXTRA_MODULES_PATH=/opencv/opencv_contrib/modules \
- -D PYTHON3_EXECUTABLE=/usr/local/bin/python3 .. \
- && make -j$(nproc)
+RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
+ -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D WITH_CUDA=OFF  \
+    -D BUILD_JAVA=OFF  \
+    -D CMAKE_INSTALL_PREFIX=/opencv_install .. \
+    -D INSTALL_C_EXAMPLES=OFF \
+    -D INSTALL_PYTHON_EXAMPLES=OFF \
+    -D OPENCV_GENERATE_PKGCONFIG=ON \
+    -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
+    -D BUILD_EXAMPLES=OFF ..  \
+    -D BUILD_TESTS=OFF \
+    -D BUILD_PERF_TESTS=OFF \
+    -D BUILD_DOCS=OFF \
+    -D BUILD_JAVA=OFF \
+    -D BUILD_opencv_python2=OFF \
+    -D BUILD_opencv_python3=OFF \
+    -D BUILD_opencv_apps=OFF \
+    -D OPENCV_EXTRA_MODULES_PATH=/opencv/opencv_contrib/modules \
+    -D PYTHON3_EXECUTABLE=/usr/local/bin/python3 .. \
+    # -D BUILD_opencv_xfeatures2d=OFF \
+    && make -j$(nproc)
 
 RUN make install && ldconfig
 
