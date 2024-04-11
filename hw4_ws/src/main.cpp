@@ -35,7 +35,7 @@ int main() {
 
 // rgbd data
 std::string base_name = "cloud_bin_";
-const std::string file_dir = "../data/rgbd/"; 
+const std::string file_dir = "data/rgbd/"; 
 
 // lidar data
 // std::string base_name = "Hokuyo_";
