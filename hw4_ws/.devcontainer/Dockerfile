@@ -59,60 +59,18 @@ RUN apt-get clean && \
         apt-get clean
 
 
-# Install OpenCV 
-ARG OPENCV_VERSION="4.9.0"
-
-WORKDIR /opencv
-
-RUN wget -O opencv.zip https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip \
-    && wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/${OPENCV_VERSION}.zip \
-    && unzip opencv.zip \
-    && unzip opencv_contrib.zip \
-    && mv opencv-${OPENCV_VERSION} opencv \
-    && mv opencv_contrib-${OPENCV_VERSION} opencv_contrib
-
-
-RUN mkdir /opencv/opencv/build
-WORKDIR /opencv/opencv/build
-
 # Create OPENCV on a layer 
 # Build cores should be 1.5x the number of cores on the system (https://stackoverflow.com/questions/414714/compiling-with-g-using-multiple-cores)
-# ARG OPENCV_VERSION="4.9.0"
-# ARG BUILD_CORES=18
-# WORKDIR /
-# RUN git clone -b ${OPENCV_VERSION} --single-branch --depth 1 https://github.com/opencv/opencv.git && \
-#     git clone -b ${OPENCV_VERSION} --single-branch --depth 1 https://github.com/opencv/opencv_contrib.git && \
-#     cd /opencv && \
-#     mkdir build -p && \
-#     cd /opencv/build && \
-#     cmake -D CMAKE_BUILD_TYPE=Release \
-#     -D WITH_CUDA=OFF  \
-#     -D BUILD_JAVA=OFF  \
-#     -D CMAKE_INSTALL_PREFIX=/opencv_install .. \
-#     -D INSTALL_C_EXAMPLES=OFF \
-#     -D INSTALL_PYTHON_EXAMPLES=OFF \
-#     -D OPENCV_GENERATE_PKGCONFIG=ON \
-#     -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
-#     -D BUILD_EXAMPLES=OFF ..  \
-#     -D BUILD_TESTS=OFF \
-#     -D BUILD_PERF_TESTS=OFF \
-#     -D BUILD_DOCS=OFF \
-#     -D BUILD_JAVA=OFF \
-#     -D BUILD_opencv_python2=OFF \
-#     -D BUILD_opencv_python3=OFF \
-#     -D BUILD_opencv_apps=OFF \
-#     -D BUILD_opencv_xfeatures2d=OFF && \
-#     make -j${BUILD_CORES} && make install && \
-#     cd / && \
-#     rm opencv -rf && \
-#     rm opencv_contrib -rf
-
-RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
- -D CMAKE_INSTALL_PREFIX=/usr/local \
-#  -D INSTALL_PYTHON_EXAMPLES=ON \
-#  -D INSTALL_C_EXAMPLES=ON \
-RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
- -D CMAKE_INSTALL_PREFIX=/usr/local \
+ARG OPENCV_VERSION="4.9.0"
+# Cut down to save my memory and soul
+ARG BUILD_CORES=12 
+WORKDIR /
+RUN git clone -b ${OPENCV_VERSION} --single-branch --depth 1 https://github.com/opencv/opencv.git && \
+    git clone -b ${OPENCV_VERSION} --single-branch --depth 1 https://github.com/opencv/opencv_contrib.git && \
+    cd /opencv && \
+    mkdir build -p && \
+    cd /opencv/build && \
+    cmake -D CMAKE_BUILD_TYPE=Release \
     -D WITH_CUDA=OFF  \
     -D BUILD_JAVA=OFF  \
     -D CMAKE_INSTALL_PREFIX=/opencv_install .. \
@@ -128,12 +86,13 @@ RUN cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D BUILD_opencv_python2=OFF \
     -D BUILD_opencv_python3=OFF \
     -D BUILD_opencv_apps=OFF \
-    -D OPENCV_EXTRA_MODULES_PATH=/opencv/opencv_contrib/modules \
-    -D PYTHON3_EXECUTABLE=/usr/local/bin/python3 .. \
-    # -D BUILD_opencv_xfeatures2d=OFF \
-    && make -j$(nproc)
+    # -D BUILD_opencv_xfeatures2d=OFF && \
+    && make -j${BUILD_CORES} && make install && \
+    cd / && \
+    rm opencv -rf && \
+    rm opencv_contrib -rf
 
-RUN make install && ldconfig
+RUN ldconfig
 
 
 
