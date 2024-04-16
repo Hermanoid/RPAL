@@ -62,7 +62,7 @@ message(STATUS "Eigen Version: ${EIGEN3_VERSION_STRING} ${EIGEN3_VERSION}")
 
 ##################### OpenCV ######################
 # Find installed OpenCV
-set(OpenCV_DIR "/usr/local/include/opencv4")
+set(OpenCV_DIR "/opencv_install")
 find_package(OpenCV 4 REQUIRED)
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
