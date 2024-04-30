@@ -97,7 +97,7 @@ int main()
         auto point_cloud_ptr = std::make_shared<open3d::geometry::PointCloud>();
         std::cout << "Read and downsample point cloud from " << file_path << std::endl;
         open3d::io::ReadPointCloud(file_path, *point_cloud_ptr);
-        point_cloud_ptr->PaintUniformColor(colors[i]);
+        // point_cloud_ptr->PaintUniformColor(colors[i]);
         point_cloud_ptr->EstimateNormals(open3d::geometry::KDTreeSearchParamHybrid(voxel_size*3, 30));
         auto downpcd = point_cloud_ptr->VoxelDownSample(voxel_size);
         int downsize = downpcd->points_.size();
@@ -105,8 +105,8 @@ int main()
         std::cout << "downsample/original " << downsize << "/" << ogsize << " (" << ((float)downsize/ogsize)*100 << "%)" <<std::endl;
 
         // compute normals and features
-        auto search_param = open3d::geometry::KDTreeSearchParamHybrid(voxel_size*5, 30);
-        std::shared_ptr<open3d::pipelines::registration::Feature> fpfh = open3d::pipelines::registration::ComputeFPFHFeature(*downpcd, search_param);
+        // auto search_param = open3d::geometry::KDTreeSearchParamHybrid(voxel_size*5, 30);
+        // std::shared_ptr<open3d::pipelines::registration::Feature> fpfh = open3d::pipelines::registration::ComputeFPFHFeature(*downpcd, search_param);
 
         if(i > 0)
         {
@@ -140,20 +140,20 @@ int main()
         auto copy = std::make_shared<open3d::geometry::PointCloud>(*point_cloud_ptr);
         copy->Transform(total_transform);
         *global_pcd += *copy;
-        prev_fphf = fpfh;
+        // prev_fphf = fpfh;
 
-        // create visualization window
-        open3d::visualization::Visualizer visualizer;
-        visualizer.CreateVisualizerWindow("Point Cloud Viewer", 1024, 768);
-
-        // add point cloud to the window
-        // visualizer.AddGeometry(point_cloud_ptr);
-        visualizer.AddGeometry(global_pcd);
-
-
-        // run the visualization
-        visualizer.Run();
     }
+    // create visualization window
+    open3d::visualization::Visualizer visualizer;
+    visualizer.CreateVisualizerWindow("Point Cloud Viewer", 1024, 768);
+
+    // add point cloud to the window
+    // visualizer.AddGeometry(point_cloud_ptr);
+    visualizer.AddGeometry(global_pcd);
+
+
+    // run the visualization
+    visualizer.Run();
 
     return 0;
 }
